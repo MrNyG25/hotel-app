@@ -1,0 +1,11 @@
+<p-menubar [model]="items">
+    <ng-template pTemplate="start" >
+        <img src="assets/img/logo.png" class="logo" alt="logo" >
+    </ng-template>
+
+    <ng-template pTemplate="end" >
+        <button routerLink="/login" pButton label="Iniciar sesión" icon="pi pi-sign-in"  tooltipPosition="bottom" ></button>
+
+        <button  pButton label="Registrarse" icon="pi pi-id-card" tooltipPosition="bottom" class="spacingLoginButton"></button>
+      </ng-template>
+</p-menubar>
