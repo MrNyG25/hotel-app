@@ -9,4 +9,8 @@
       </ng-template>
 </p-menubar>
 
-<p-panelMenu [model]="items" [style]="{'width':'300px'}" class="mt-5"></p-panelMenu>
+<div class="grid mt-3">
+    <p-panelMenu [model]="items" [style]="{'width':'300px'}" class="col-3 "></p-panelMenu>
+    
+    <router-outlet class="col-1 " ></router-outlet>
+</div>

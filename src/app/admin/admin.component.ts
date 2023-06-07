@@ -18,10 +18,12 @@ export class AdminComponent implements OnInit {
                   {
                       label: 'Hoteles', 
                       icon: 'pi pi-server',
+                      routerLink: 'hotels'
                   },
                   {
                       label: 'Reservas', 
                       icon: 'pi pi-book',
+                      routerLink: 'bookings'
                   }
 
                 ]

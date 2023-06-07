@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-hotels',
-  templateUrl: './hotels.component.html',
-  styleUrls: ['./hotels.component.scss']
+  selector: 'app-hotels-public',
+  templateUrl: './hotels-public.component.html',
+  styleUrls: ['./hotels-public.component.scss']
 })
-export class HotelsComponent {
+export class HotelsPublicComponent {
 
   hotels = [
   {
