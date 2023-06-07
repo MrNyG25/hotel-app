@@ -8,6 +8,12 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {TableModule} from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { CalendarModule } from 'primeng/calendar';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [],
@@ -18,12 +24,24 @@ import {TableModule} from 'primeng/table';
     CardModule,
     InputTextModule,
     PanelMenuModule,
-    TableModule],
+    TableModule,
+    TooltipModule,
+    CalendarModule,
+    InputSwitchModule,
+    DropdownModule,
+    AutoCompleteModule,
+    DialogModule],
   exports: [CommonModule, MenubarModule,
     ButtonModule,
     CardModule,
     InputTextModule,
     PanelMenuModule,
-    TableModule],
+    TableModule,
+    TooltipModule,
+    CalendarModule,
+    InputSwitchModule,
+    DropdownModule,
+    AutoCompleteModule,
+    DialogModule],
 })
 export class PrimengModule {}

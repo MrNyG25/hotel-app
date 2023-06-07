@@ -1,4 +1,26 @@
 
+<div class="card flex justify-content-center mt-5">
+    <h2>Filtros</h2>
+</div>
+<div class="card flex justify-content-center gap-2">
+    
+    
+    <div class="flex flex-column gap-2">
+        <label class="">Ciudad</label>
+        <p-autoComplete [(ngModel)]="selectedCountry" [dropdown]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"></p-autoComplete>
+    </div>
+
+    <div class="flex flex-column gap-2">
+        <label class="">Fecha</label>
+        <p-calendar selectionMode="range" [readonlyInput]="true" [showIcon]="true" [showButtonBar]="true"></p-calendar>
+    </div>
+
+    <div class="flex flex-column gap-2">
+        <label class="">Huéspedes</label>
+        <p-dropdown [options]="peopleQuantityList" (ngModelChange)="peopleQuantityListChanged($event)" [ngModel]="selectedPeople" optionLabel="label" [virtualScrollItemSize]="20"></p-dropdown>
+    </div>
+</div>
+
 <div style="display: flex;justify-content: center;">
     <div class="grid mt-5">
         
@@ -8,8 +30,9 @@
     </ng-template> -->
     <img [src]="hotel.image" [width]="313" [height]="246" alt="{{ hotel.name }}" />
     <ng-template pTemplate="footer">
+        <span>{{hotel.city}}</span>
         <div class="footer-container">
-            <span> {{ hotel.price | currency: 'USD': 'symbol' }}</span>
+            <span> {{ hotel.night_price | currency: 'USD': 'symbol' }} noche</span>
             <button pButton type="button" label="Reservar" class="p-button-success"></button>
         </div>
        

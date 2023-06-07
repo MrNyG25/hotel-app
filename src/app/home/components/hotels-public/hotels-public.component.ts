@@ -1,31 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Hotel } from 'src/app/admin/hotels/interfaces/hotel.interface';
+import { HotelsService } from 'src/app/services/hotels.service';
 
 @Component({
   selector: 'app-hotels-public',
   templateUrl: './hotels-public.component.html',
   styleUrls: ['./hotels-public.component.scss']
 })
-export class HotelsPublicComponent {
+export class HotelsPublicComponent implements OnInit  {
+  peopleQuantityList: any[] = [];
 
-  hotels = [
-  {
-    name: 'Roadway Hotel',
-    image: 'https://images.pexels.com/photos/16104977/pexels-photo-16104977/free-photo-of-facade-of-hotel-in-city.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    price: 134455
+  selectedPeople: any;
 
-  },
-  {
-    name: 'Gran Eztanplaza',
-    image: 'https://images.pexels.com/photos/10949696/pexels-photo-10949696.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    price: 876545
+  hotels: Hotel[] = [];
 
-  },
-  {
-    name: 'Hotel Atlanta',
-    image: 'https://images.pexels.com/photos/15374519/pexels-photo-15374519/free-photo-of-umbrellas-in-front-of-concrete-building.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    price: 312414
+  selectedCountry: any;
+  filteredCountries: any[] = [];
+  countries: any[] = [
+    {name: 'Cali'},
+    {name: 'Bogotá'},
+    {name: 'Medellín'},
+  ];
 
-  },
-  // Add more hotel objects as needed
-];
+  constructor(private hotelsService: HotelsService){}
+
+  ngOnInit(): void {
+    this.hotelsService.getHotels().subscribe((hotels: Hotel[]) => this.hotels = hotels);
+    this.fillPeopleQuantitySelect();
+  }
+
+  fillPeopleQuantitySelect(){
+    this.peopleQuantityList = [];
+    for (let i = 1; i <= 20; i++) {
+        this.peopleQuantityList.push({ label: i+' Huéspedes' , value: i });
+    }
+  }
+
+  filterCountry(event: { query: any; }){
+    let query = event.query;
+    console.log(query);
+    this.filteredCountries = [...this.countries];
+  }
+
+  peopleQuantityListChanged(event: any){
+    console.log(event)
+  }
+
 }

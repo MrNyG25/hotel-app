@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HotelsRoutingModule } from './hotels-routing.module';
 import { HotelsComponent } from './hotels.component';
 import { PrimengModule } from 'src/app/primeng/primeng.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { PrimengModule } from 'src/app/primeng/primeng.module';
   imports: [
     CommonModule,
     HotelsRoutingModule,
-    PrimengModule
+    PrimengModule,
+    FormsModule
   ]
 })
 export class HotelsModule { }

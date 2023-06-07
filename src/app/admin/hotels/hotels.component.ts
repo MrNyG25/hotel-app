@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import { HotelsService } from './hotels.service';
+import { HotelsService } from '../../services/hotels.service';
 import { Hotel } from './interfaces/hotel.interface';
 
 interface Customer{
@@ -15,6 +15,10 @@ interface Customer{
   providers:[MessageService,ConfirmationService]
 })
 export class HotelsComponent implements OnInit {
+
+  visible: boolean = false;
+  visibleAddDialog: boolean = false;
+
   hotels: Customer[] = [];
 
   first = 0;
@@ -46,4 +50,14 @@ export class HotelsComponent implements OnInit {
   isFirstPage(): boolean {
       return this.hotels ? this.first === 0 : true;
   }
+
+  
+
+    showDialog() {
+        this.visible = true;
+    }
+
+    showAddDialog() {
+        this.visibleAddDialog = true;
+    }
 }
