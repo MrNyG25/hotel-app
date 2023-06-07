@@ -1,12 +1,7 @@
 <div
-  style="
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-  "
+  class="container"
 >
-  <div style="width: 40%">
+  <div style="width: 28rem;">
     <p-card>
       <div class="grid">
         <img
@@ -30,7 +25,7 @@
           <input type="password" pInputText placeholder="Password" />
         </div>
       </div>
-      <button class="col-12 p-button-success" pButton label="Iniciar sesión" ></button>
+      <button class="col-12 p-button-success" pButton label="Iniciar sesión" (click)="arr.push(45)" ></button>
     </p-card>
   </div>
 </div>

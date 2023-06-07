@@ -6,10 +6,22 @@ import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
+import {PanelMenuModule} from 'primeng/panelmenu';
+import {MenuItem} from 'primeng/api';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, MenubarModule],
-  exports: [MenubarModule, ButtonModule, CardModule, InputTextModule],
+  imports: [
+    CommonModule, 
+    MenubarModule,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    PanelMenuModule],
+  exports: [CommonModule, MenubarModule,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    PanelMenuModule],
 })
 export class PrimengModule {}

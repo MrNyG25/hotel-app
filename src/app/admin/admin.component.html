@@ -1,2 +1,12 @@
-<p>admin works!</p>
-<p-button label="Submit"></p-button>
+<p-menubar >
+    <ng-template pTemplate="start" >
+        <img src="assets/img/logo.png" class="logo" alt="logo" >
+    </ng-template>
+
+    <ng-template pTemplate="end" >
+        <button class="p-button-danger" routerLink="/home" pButton label="Cerrar sesión" icon="pi pi-sign-out"   ></button>
+
+      </ng-template>
+</p-menubar>
+
+<p-panelMenu [model]="items" [style]="{'width':'300px'}" class="mt-5"></p-panelMenu>
