@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UsersService } from '../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -6,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  arr = [1,3];
+
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+  });
+
+  constructor(private usersService: UsersService, private router: Router){}
+
   ngOnInit(): void {
     
-    console.log(this.arr)
+
+  }
+
+  onSubmit(){
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
+    
+    if(this.usersService.isValidUserData(email!, password!)){
+      this.router.navigate(['admin'])
+    }
   }
 }
