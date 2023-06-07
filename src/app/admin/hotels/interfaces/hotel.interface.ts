@@ -1,4 +1,5 @@
 export interface Hotel {
+    id: string;
     name: string;
     image: string;
     night_price: number;
