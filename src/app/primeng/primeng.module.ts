@@ -7,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import {PanelMenuModule} from 'primeng/panelmenu';
-import {MenuItem} from 'primeng/api';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   declarations: [],
@@ -17,11 +17,13 @@ import {MenuItem} from 'primeng/api';
     ButtonModule,
     CardModule,
     InputTextModule,
-    PanelMenuModule],
+    PanelMenuModule,
+    TableModule],
   exports: [CommonModule, MenubarModule,
     ButtonModule,
     CardModule,
     InputTextModule,
-    PanelMenuModule],
+    PanelMenuModule,
+    TableModule],
 })
 export class PrimengModule {}
