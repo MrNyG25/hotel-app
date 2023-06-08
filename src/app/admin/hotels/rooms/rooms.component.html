@@ -18,13 +18,13 @@
             <tr>
                 <td>{{room.room_type.name}}</td>
                 <td>{{room.location.name}}</td>
-                <td>{{room.is_reserved}}</td>
+                <td>{{room.is_reserved ? 'Si' : 'No'}}</td>
                 <td>
                     <p-inputSwitch [(ngModel)]="room.status" (onChange)="onChangeRoomStatus(room.id)"></p-inputSwitch>
                 </td>
                 <td>
                     <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning" pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button routerLink="rooms" icon="pi pi-book" styleClass="p-button-rounded p-button-success ml-2 " pTooltip="Reservas" tooltipPosition="bottom" ></p-button>
+                    <p-button (click)="onShowRoomBookingsModal(room.id)" icon="pi pi-book" styleClass="p-button-rounded p-button-success ml-2 " pTooltip="Reservas" tooltipPosition="bottom" ></p-button>
                 </td>
             </tr>
         </ng-template>
