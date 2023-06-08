@@ -52,4 +52,8 @@ export class HotelsComponent implements OnInit {
   showAddDialog() {
     this.visibleAddDialog = true;
   }
+
+  onAddDialogClose(){
+    this.ngOnInit();
+  }
 }

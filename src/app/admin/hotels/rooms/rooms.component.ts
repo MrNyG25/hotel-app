@@ -30,7 +30,6 @@ export class RoomsComponent implements OnInit  {
   }
 
   onAddDialogClose(){
-    console.log("close dialog")
     this.ngOnInit();
   }
 

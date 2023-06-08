@@ -10,7 +10,7 @@ export class BookingsService {
 
   bookings: Booking[] = [
     {
-      guests_info:[
+      guests:[
         {
           name: "Jose",
           lastname: "Correa",
@@ -39,6 +39,8 @@ export class BookingsService {
         lastname: "Correa",
         phone_number: 1231232
       },
+      check_in_date: "2011-11-03",
+      check_out_data: "2011-11-03",
       room_id: "312312312"
     }
   ]

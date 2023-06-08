@@ -15,7 +15,7 @@ export class HotelFormComponent {
   hotelForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
-    image: new FormControl('', [Validators.required, Validators.pattern(/^https:\/\/[\w.-]+\/im\/pictures\/[\w-]+\.(jpe?g|png)$/)]),
+    image: new FormControl('', [Validators.required, Validators.pattern(/^https.*\.(jpe?g|png)$/)]),
     night_price: new FormControl('', [Validators.required]),
   } ,{ updateOn: 'submit' });
 
@@ -44,6 +44,7 @@ export class HotelFormComponent {
     if(this.hotelForm.valid){
       console.log(this.hotelForm.value);
       this.hotelsService.saveHotel(this.hotelForm.value)
+      this.hotelForm.reset();
     }else{
       this.hotelForm.markAllAsTouched();
     }

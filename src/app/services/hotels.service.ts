@@ -52,6 +52,10 @@ export class HotelsService {
   }
   
   saveHotel(hotel: Hotel | any): void{
+    let hotels = this.globalService.getData(this.localStorageKey, this.hotels);
+    
+    this.hotels = hotels;
+
     this.hotels.push({
       ...hotel,
       status: true,

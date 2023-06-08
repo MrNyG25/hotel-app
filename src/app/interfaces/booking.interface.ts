@@ -1,4 +1,4 @@
-interface GuestInfo {
+interface Guest {
   name: string;
   lastname: string;
   birth_date: string;
@@ -17,7 +17,9 @@ interface EmergencyContact {
 }
 
 export interface Booking {
-  guests_info: GuestInfo[];
+  guests: Guest[];
   emergency_contact: EmergencyContact;
+  check_in_date: string;
+  check_out_data: string;
   room_id: string;
 }

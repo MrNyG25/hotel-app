@@ -31,7 +31,7 @@
     </p-table>
 </div>
 
-<p-dialog header="Header" [(visible)]="visibleAddDialog" [style]="{width: '50vw'}" (onHide)="onAddDialogClose()">
+<p-dialog header="Header" [(visible)]="visibleAddDialog" (onHide)="onAddDialogClose()" [style]="{width: '50vw'}" [modal]="true" >
     <ng-template pTemplate="header">
         <span class="text-xl font-bold">Habitación</span>
     </ng-template>

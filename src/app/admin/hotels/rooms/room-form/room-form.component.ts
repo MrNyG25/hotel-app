@@ -74,6 +74,7 @@ export class RoomFormComponent implements OnInit{
         ...this.roomForm.value,
         hotel_id: this.hotel_id
       });
+      this.roomForm.reset();
     }else{
       this.roomForm.markAllAsTouched();
     }
