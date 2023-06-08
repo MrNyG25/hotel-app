@@ -16,6 +16,7 @@ export class RoomsService {
       room_type: RoomType.Single,
       location: "Salida",
       status: true,
+      is_reserved: "Si",
       hotel_id: "1"
     },
     {
@@ -23,6 +24,7 @@ export class RoomsService {
       room_type: RoomType.Double,
       location: "Salida",
       status: true,
+      is_reserved: "No",
       hotel_id: "1"
     }
   ]

@@ -6,4 +6,5 @@ export interface Room {
     location: string;
     status: boolean;
     hotel_id: string;
+    is_reserved: string;
 }
