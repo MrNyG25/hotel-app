@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, delay, of } from 'rxjs';
 import { Hotel } from '../admin/hotels/interfaces/hotel.interface';
+import { GlobalService } from './global.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HotelsService {
+  private readonly localStorageKey = 'hotelsList';
 
    hotels: Hotel[] = [
     {
@@ -15,8 +17,7 @@ export class HotelsService {
       night_price: 134455,
       city: "Medellin",
       status: true,
-      rooms: 50,
-      bookings: 20
+
     },
     {
       id: "2",
@@ -25,8 +26,7 @@ export class HotelsService {
       night_price: 876545,
       city: "Cali",
       status: false,
-      rooms: 100,
-      bookings: 10
+
     },
     {
       id: "3",
@@ -35,14 +35,41 @@ export class HotelsService {
       night_price: 312414,
       city: "Bogota",
       status: true,
-      rooms: 75,
-      bookings: 30
+
     }
   ];
 
-  constructor() { }
+  constructor(
+    private globalService: GlobalService
+  ) { }
+
+  refreshLocalStorage(){
+    localStorage.setItem(this.localStorageKey, JSON.stringify([...this.hotels]));
+  }
+
+  getDataLocalStorage(){
+    return localStorage.getItem(this.localStorageKey);
+  }
+
 
   getHotels(): Observable<Hotel[]> {
-    return of(this.hotels)
+    const savedData = this.getDataLocalStorage();
+
+    if(!savedData) {
+      this.refreshLocalStorage()
+      const savedData = this.getDataLocalStorage();
+      return of(JSON.parse(savedData!));
+    }
+    return of(JSON.parse(savedData!));
+  }
+  
+  saveHotel(hotel: Hotel | any): void{
+    this.hotels.push({
+      ...hotel,
+      status: true,
+      id: this.globalService.getUUID()
+    });
+    this.refreshLocalStorage();
+    this.getHotels()
   }
 }

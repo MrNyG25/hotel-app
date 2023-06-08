@@ -60,34 +60,5 @@
     <ng-template pTemplate="header">
         <span class="text-xl font-bold">Hotel</span>
     </ng-template>
-    <div class="grid">
-
-        <div class="col-6">
-            <div class="flex flex-column gap-2">
-                <label class="">Nombre</label>
-                <input pInputText placeholder="Hotel Plaza" />
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="flex flex-column gap-2">
-                <label class="">Ciudad</label>
-                <input pInputText placeholder="Cali" />
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="flex flex-column gap-2">
-                <label class="">Imagen Url</label>
-                <input pInputText placeholder="https://myimage.png" />
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="flex flex-column gap-2">
-                <label class="">Costo por noche</label>
-                <input pInputText type="number" placeholder="200.000" />
-            </div>
-        </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="visible = false" label="Ok" styleClass="p-button-text"></p-button>
-    </ng-template>
+    <app-hotel-form></app-hotel-form>
 </p-dialog>
