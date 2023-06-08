@@ -18,7 +18,7 @@
                 <td>{{hotel.name}}</td>
                 <td>{{hotel.city}}</td>
                 <td>
-                    <p-inputSwitch [(ngModel)]="hotel.status"></p-inputSwitch>
+                    <p-inputSwitch [(ngModel)]="hotel.status" (onChange)="onChangeHotelStatus(hotel.id)"></p-inputSwitch>
                 </td>
                 <td>
                     <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning" pTooltip="Editar" tooltipPosition="bottom"></p-button>

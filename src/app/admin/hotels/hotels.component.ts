@@ -24,9 +24,7 @@ export class HotelsComponent implements OnInit {
   constructor(private hotelsService: HotelsService) {}
 
   ngOnInit() {
-    this.hotelsService
-      .getHotels()
-      .subscribe((hotels: Hotel[]) => (this.hotels = hotels));
+    this.getHotels();
   }
 
   next() {
@@ -49,11 +47,21 @@ export class HotelsComponent implements OnInit {
     return this.hotels ? this.first === 0 : true;
   }
 
+  getHotels(): void{
+    this.hotelsService
+      .getHotels()
+      .subscribe((hotels: Hotel[]) => (this.hotels = hotels));
+  }
+
+  onChangeHotelStatus(hotel_id: string){
+    this.hotelsService.toggleHotelStatus(hotel_id);
+  }
+
   showAddDialog() {
     this.visibleAddDialog = true;
   }
 
   onAddDialogClose(){
-    this.ngOnInit();
+    this.getHotels();
   }
 }

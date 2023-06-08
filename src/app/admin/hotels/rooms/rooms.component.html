@@ -20,7 +20,7 @@
                 <td>{{room.location.name}}</td>
                 <td>{{room.is_reserved}}</td>
                 <td>
-                    <p-inputSwitch [(ngModel)]="room.status"></p-inputSwitch>
+                    <p-inputSwitch [(ngModel)]="room.status" (onChange)="onChangeRoomStatus(room.id)"></p-inputSwitch>
                 </td>
                 <td>
                     <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning" pTooltip="Editar" tooltipPosition="bottom"></p-button>

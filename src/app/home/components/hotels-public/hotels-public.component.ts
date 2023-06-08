@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
 import { Hotel } from 'src/app/admin/hotels/interfaces/hotel.interface';
 import { HotelsService } from 'src/app/services/hotels.service';
 
@@ -35,7 +36,9 @@ export class HotelsPublicComponent implements OnInit  {
   constructor(private hotelsService: HotelsService){}
 
   ngOnInit(): void {
-    this.hotelsService.getHotels().subscribe((hotels: Hotel[]) => this.hotels = hotels);
+    this.hotelsService.getHotels().pipe(
+      map(hotels => hotels.filter(hotel => hotel.status === true))
+    ).subscribe((hotels: Hotel[]) => this.hotels = hotels);
     this.fillGuestsQuantitySelect();
   }
 

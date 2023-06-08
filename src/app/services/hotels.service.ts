@@ -64,4 +64,16 @@ export class HotelsService {
     this.globalService.refreshLocalStorage(this.localStorageKey, this.hotels)
     this.getHotels()
   }
+
+
+  toggleHotelStatus(hotel_id: string): void{
+    let hotels: Hotel[] = this.globalService.getData(this.localStorageKey, this.hotels);
+    let hotelRes = hotels.map((hotel) => {
+      if(hotel.id === hotel_id){
+        hotel.status = !hotel.status
+      }
+      return hotel;
+    })
+    this.globalService.refreshLocalStorage(this.localStorageKey, hotelRes);
+  }
 }

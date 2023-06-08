@@ -17,6 +17,10 @@ export class RoomsComponent implements OnInit  {
     private activatedRoute: ActivatedRoute){}
   
   ngOnInit(): void {
+    this.getRooms();
+  }
+
+  getRooms(): void{
     this.activatedRoute.queryParams.subscribe(params => {
       this.roomsService.getRoomsByHotelId(params?.hotel).subscribe(rooms => {
         this.rooms = rooms;
@@ -24,13 +28,15 @@ export class RoomsComponent implements OnInit  {
     })
   }
 
-
   showAddDialog() {
     this.visibleAddDialog = true;
   }
 
   onAddDialogClose(){
-    this.ngOnInit();
+    this.getRooms();
   }
 
+  onChangeRoomStatus(room_id: string){
+    this.roomsService.toggleRoomStatus(room_id);
+  }
 }
