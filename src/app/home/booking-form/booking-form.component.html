@@ -1,0 +1,14 @@
+<p-table [value]="rooms" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:25%">Tipo</th>
+            <th style="width:25%">Ubicación</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-room>
+        <tr>
+            <td>{{room.room_type.name}}</td>
+            <td>{{room.location.name}}</td>
+        </tr>
+    </ng-template>
+</p-table>

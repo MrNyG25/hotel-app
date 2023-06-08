@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     component: HomeComponent
   },
+  {
+    path: 'booking-form',
+    loadChildren: () => import('./booking-form/booking-form.module').then(m => m.BookingFormModule)
+  },
 ];
 
 @NgModule({
