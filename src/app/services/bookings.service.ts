@@ -15,7 +15,7 @@ export class BookingsService {
           name: "Jose",
           lastname: "Correa",
           birth_date: "2011-11-03",
-          gender: "Male",
+          gender: "m",
           type_document_id: "CC",
           document_id: 123123,
           email: "jj@gmail.com",
@@ -26,7 +26,7 @@ export class BookingsService {
           name: "Jose",
           lastname: "Correa",
           birth_date: "2011-11-03",
-          gender: "Male",
+          gender: "f",
           type_document_id: "CC",
           document_id: 123123,
           email: "jj@gmail.com",
@@ -35,8 +35,7 @@ export class BookingsService {
         },
       ],
       emergency_contact:{
-        name: "Jose",
-        lastname: "Correa",
+        full_name: "Jose Alfonso",
         phone_number: 1231232
       },
       check_in_date: "2011-11-03",

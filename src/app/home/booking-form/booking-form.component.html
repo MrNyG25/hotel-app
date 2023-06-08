@@ -1,14 +1,154 @@
-<p-table [value]="rooms" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template pTemplate="header">
+<p-menubar>
+  <ng-template pTemplate="start">
+    <img src="assets/img/logo.png" class="logo" routerLink="/home" alt="logo" />
+  </ng-template>
+</p-menubar>
+
+
+<div class="card grid justify-content-center">
+  <div class="flex flex-column gap-2 col-10 lg:col-8 sm:col-11">
+    <div class="flex flex-column gap-2 my-3">
+        <h2>Rango estadía</h2>
+        <p-calendar selectionMode="range" [readonlyInput]="true" [showIcon]="true" [showButtonBar]="true"></p-calendar>
+    </div>
+
+    <div>
+        <h2>Habitaciones</h2>
+    </div>
+    <p-table [value]="rooms" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
         <tr>
-            <th style="width:25%">Tipo</th>
-            <th style="width:25%">Ubicación</th>
+          <th style="width: 25%">Tipo</th>
+          <th style="width: 25%">Ubicación</th>
+          <th style="width: 25%">Acciones</th>
         </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-room>
+      </ng-template>
+      <ng-template pTemplate="body" let-room>
         <tr>
-            <td>{{room.room_type.name}}</td>
-            <td>{{room.location.name}}</td>
+          <td>{{ room.room_type.name }}</td>
+          <td>{{ room.location.name }}</td>
+          <td>
+            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-primary" pTooltip="Editar" tooltipPosition="bottom"></p-button>
+          </td>
         </tr>
-    </ng-template>
-</p-table>
+      </ng-template>
+    </p-table>
+    <h2 class="my-3">Huéspedes</h2>
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+      <div formArrayName="guests">
+        <div
+          *ngFor="let guest of guests.controls; let i = index"
+          [formGroupName]="i"
+          class="grid"
+        >
+        <div class="col-12">
+            <h3>{{i+1 == 1? 'Datos de quien realiza la reserva' : 'Huésped '+(i+1) }}</h3>
+        </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Nombres</label>
+              <input pInputText type="text" formControlName="name" />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Apellidos</label>
+              <input pInputText type="text" formControlName="lastname" />
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Fecha de Nacimiento</label>
+              <input pInputText type="date" formControlName="birth_date" />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Género</label>
+              <input pInputText type="text" formControlName="gender" />
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Tipo de Documento</label>
+              <input
+                pInputText
+                type="text"
+                formControlName="type_document_id"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Número de Documento</label>
+              <input pInputText type="text" formControlName="document_id" />
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Correo Electrónico</label>
+              <input pInputText type="email" formControlName="email" />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="flex flex-column gap-2">
+              <label class="">Número de Teléfono</label>
+              <input pInputText type="text" formControlName="phone_number" />
+            </div>
+          </div>
+
+          <div class="col-6">
+            <p-button
+              (click)="removeItem(i)"
+              icon="pi pi-trash"
+              styleClass="p-button-danger"
+              pTooltip="Eliminar huésped"
+              tooltipPosition="bottom"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+
+      <p-button
+        (click)="addItem()"
+        icon="pi pi-plus-circle"
+        styleClass="p-button-success mt-3"
+        label="Agregar huésped"
+      ></p-button>
+
+
+      <div>
+         <h2>Contacto de emergencia</h2>
+      </div>
+      <div formGroupName="emergency_contact">
+        <div class="grid">
+            <div class="col-6">
+                <div class="flex flex-column gap-2">
+                  <label class="">Nombre completo</label>
+                  <input pInputText type="text" formControlName="full_name" />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="flex flex-column gap-2">
+                  <label class="">Numero de teléfono</label>
+                  <input pInputText type="number" formControlName="phone_number" />
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="flex flex-row gap-2">
+
+        <p-button
+          type="submit"
+          icon="pi pi-book"
+          styleClass="p-button-primary mt-3"
+          label="Realizar reserva"
+        ></p-button>
+      </div>
+    </form>
+  </div>
+</div>

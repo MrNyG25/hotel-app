@@ -60,7 +60,7 @@ export class HotelsPublicComponent implements OnInit  {
     
   fillGuestsQuantitySelect(){
     this.guestsQuantityList = [];
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 10; i++) {
         this.guestsQuantityList.push({ label: i+' Huéspedes' , value: i });
     }
   }

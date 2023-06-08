@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BookingFormRoutingModule } from './booking-form-routing.module';
 import { BookingFormComponent } from './booking-form.component';
 import { PrimengModule } from 'src/app/primeng/primeng.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,9 @@ import { PrimengModule } from 'src/app/primeng/primeng.module';
   imports: [
     CommonModule,
     BookingFormRoutingModule,
-    PrimengModule
+    PrimengModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class BookingFormModule { }

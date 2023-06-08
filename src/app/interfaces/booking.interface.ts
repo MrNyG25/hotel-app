@@ -11,8 +11,7 @@ interface Guest {
 }
 
 interface EmergencyContact {
-  name: string;
-  lastname: string;
+  full_name: string;
   phone_number: number;
 }
 

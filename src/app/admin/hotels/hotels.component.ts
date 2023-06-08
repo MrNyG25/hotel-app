@@ -27,25 +27,6 @@ export class HotelsComponent implements OnInit {
     this.getHotels();
   }
 
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
-  }
-
-  isLastPage(): boolean {
-    return this.hotels ? this.first === this.hotels.length - this.rows : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.hotels ? this.first === 0 : true;
-  }
 
   getHotels(): void{
     this.hotelsService
