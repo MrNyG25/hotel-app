@@ -1,10 +1,13 @@
-import { RoomType } from "../enums/room-type.enum";
+import { RoomLocationI } from "./room-location.interface";
+import { RoomTypeI } from "./room-type.interface";
 
 export interface Room {
     id: string;
-    room_type: RoomType;
-    location: string;
+    room_type: RoomTypeI;
+    location: RoomLocationI;
     status: boolean;
+    is_reserved: boolean;
+    base_price: number;
+    taxes: number;
     hotel_id: string;
-    is_reserved: string;
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HotelsService } from 'src/app/services/hotels.service';
 import { Hotel } from '../interfaces/hotel.interface';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-hotel-form',
@@ -18,7 +19,9 @@ export class HotelFormComponent {
     night_price: new FormControl('', [Validators.required]),
   } ,{ updateOn: 'submit' });
 
-  constructor(private hotelsService: HotelsService){
+  constructor(
+    private hotelsService: HotelsService,
+    public globalService: GlobalService){
 
   }
   get name(): FormControl {
@@ -46,10 +49,5 @@ export class HotelFormComponent {
     }
   }
 
-  isFieldInvalid(field: AbstractControl, validationRule: string | null = null): boolean {
-    if(validationRule){
-      return field.errors?.[validationRule] && !field?.valid && (field?.dirty || field?.touched);
-    }
-    return !field?.valid && (field?.dirty || field?.touched);
-  }
+  
 }

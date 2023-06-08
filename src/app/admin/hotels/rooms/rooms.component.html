@@ -16,8 +16,8 @@
         </ng-template>
         <ng-template pTemplate="body" let-room>
             <tr>
-                <td>{{room.room_type}}</td>
-                <td>{{room.location}}</td>
+                <td>{{room.room_type.name}}</td>
+                <td>{{room.location.name}}</td>
                 <td>{{room.is_reserved}}</td>
                 <td>
                     <p-inputSwitch [(ngModel)]="room.status"></p-inputSwitch>
@@ -30,3 +30,10 @@
         </ng-template>
     </p-table>
 </div>
+
+<p-dialog header="Header" [(visible)]="visibleAddDialog" [style]="{width: '50vw'}" (onHide)="onAddDialogClose()">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold">Habitación</span>
+    </ng-template>
+    <app-room-form></app-room-form>
+</p-dialog>

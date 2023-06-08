@@ -3,8 +3,8 @@
     <div class="col-6">
         <div class="flex flex-column gap-2">
             <label class="">Nombre</label>
-            <input pInputText formControlName="name" [ngClass]="{'ng-invalid': isFieldInvalid(name), 'ng-dirty': isFieldInvalid(name)}" placeholder="Hotel Plaza" />
-            <div *ngIf="isFieldInvalid(name, 'required')">
+            <input pInputText formControlName="name" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(name), 'ng-dirty': globalService.isFieldInvalid(name)}" placeholder="Hotel Plaza" />
+            <div *ngIf="globalService.isFieldInvalid(name, 'required')">
                 <small style="color: #ef4444;">Este campo no puede estar vació</small>
             </div>
         </div>
@@ -13,7 +13,7 @@
         <div class="flex flex-column gap-2">
             <label class="">Ciudad</label>
             <input pInputText formControlName="city" placeholder="Cali" />
-            <div *ngIf="isFieldInvalid(city, 'required')">
+            <div *ngIf="globalService.isFieldInvalid(city, 'required')">
                 <small style="color: #ef4444;">Este campo no puede estar vació</small>
             </div>
         </div>
@@ -21,8 +21,8 @@
     <div class="col-6">
         <div class="flex flex-column gap-2">
             <label class="">Imagen Url</label>
-            <input pInputText  formControlName="image" [ngClass]="{'ng-invalid': isFieldInvalid(name), 'ng-dirty': isFieldInvalid(image)}" placeholder="https://myimage.png" />
-            <div *ngIf="isFieldInvalid(image, 'required')">
+            <input pInputText  formControlName="image" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(name), 'ng-dirty': globalService.isFieldInvalid(image)}" placeholder="https://myimage.png" />
+            <div *ngIf="globalService.isFieldInvalid(image, 'required')">
                 <small style="color: #ef4444;">Este campo no puede estar vació</small>
             </div>
             <div *ngIf="image.errors?.pattern">
@@ -34,7 +34,7 @@
         <div class="flex flex-column gap-2">
             <label class="">Costo por noche</label>
             <input pInputText currencyMask  formControlName="night_price" type="text" placeholder="200.000" [options]="{ prefix: 'COP$ ', thousands: ',', decimal: '.' }"/>
-            <div *ngIf="isFieldInvalid(night_price, 'required')">
+            <div *ngIf="globalService.isFieldInvalid(night_price, 'required')">
                 <small style="color: #ef4444;">Este campo no puede estar vació</small>
             </div>
         </div>

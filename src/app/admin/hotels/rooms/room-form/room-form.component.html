@@ -1,0 +1,43 @@
+<form class="grid" [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+
+    <div class="col-6">
+        <div class="flex flex-column gap-2">
+            <label class="">Tipo</label>
+            <p-dropdown [options]="roomTypes" formControlName="room_type" optionLabel="name" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(room_type), 'ng-dirty': globalService.isFieldInvalid(room_type)}" placeholder="Seleccione un tipo de habitación"></p-dropdown>
+            <div *ngIf="globalService.isFieldInvalid(room_type, 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="flex flex-column gap-2">
+            <label class="">Ubicación</label>
+            <p-dropdown [options]="roomLocations" formControlName="location" optionLabel="name" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(location), 'ng-dirty': globalService.isFieldInvalid(location)}" placeholder="Seleccione una ubicación"></p-dropdown>
+            <div *ngIf="globalService.isFieldInvalid(location, 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="flex flex-column gap-2">
+            <div class="flex flex-column gap-2">
+                <label class="">Precio base</label>
+                <input pInputText currencyMask  formControlName="base_price" type="text" placeholder="200.000" [options]="{ prefix: 'COP$ ', thousands: ',', decimal: '.' }"/>
+                <div *ngIf="globalService.isFieldInvalid(base_price, 'required')">
+                    <small style="color: #ef4444;">Este campo no puede estar vació</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="flex flex-column gap-2">
+            <label class="">Impuestos</label>
+            <input pInputText currencyMask  formControlName="taxes" type="text" placeholder="200.000" [options]="{ prefix: 'COP$ ', thousands: ',', decimal: '.' }"/>
+            <div *ngIf="globalService.isFieldInvalid(taxes, 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+            </div>
+        </div>
+    </div>
+   
+    <p-button icon="pi pi-plus-circle" styleClass="p-button-success mt-3" label="Guardar" type="submit"></p-button>
+</form>

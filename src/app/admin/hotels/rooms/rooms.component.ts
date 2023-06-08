@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RoomsComponent implements OnInit  {
   rooms: Room[] = [];
+  visibleAddDialog: boolean = false;
 
   constructor(
     private roomsService: RoomsService,
@@ -17,7 +18,6 @@ export class RoomsComponent implements OnInit  {
   
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params)
       this.roomsService.getRoomsByHotelId(params?.hotel).subscribe(rooms => {
         this.rooms = rooms;
       })
@@ -25,8 +25,13 @@ export class RoomsComponent implements OnInit  {
   }
 
 
-  showAddDialog(){
+  showAddDialog() {
+    this.visibleAddDialog = true;
+  }
 
+  onAddDialogClose(){
+    console.log("close dialog")
+    this.ngOnInit();
   }
 
 }

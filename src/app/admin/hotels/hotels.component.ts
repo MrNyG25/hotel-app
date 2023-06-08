@@ -4,19 +4,15 @@ import { MessageService } from 'primeng/api';
 import { HotelsService } from '../../services/hotels.service';
 import { Hotel } from './interfaces/hotel.interface';
 
-interface Customer{
-
-}
+interface Customer {}
 
 @Component({
   selector: 'app-hotels-public',
   templateUrl: './hotels.component.html',
   styleUrls: ['./hotels.component.scss'],
-  providers:[MessageService,ConfirmationService]
+  providers: [MessageService, ConfirmationService],
 })
 export class HotelsComponent implements OnInit {
-
-  visible: boolean = false;
   visibleAddDialog: boolean = false;
 
   hotels: Customer[] = [];
@@ -25,39 +21,35 @@ export class HotelsComponent implements OnInit {
 
   rows = 10;
 
-  constructor(private hotelsService: HotelsService) { }
+  constructor(private hotelsService: HotelsService) {}
 
   ngOnInit() {
-      this.hotelsService.getHotels().subscribe((hotels: Hotel[]) => this.hotels = hotels);
+    this.hotelsService
+      .getHotels()
+      .subscribe((hotels: Hotel[]) => (this.hotels = hotels));
   }
 
   next() {
-      this.first = this.first + this.rows;
+    this.first = this.first + this.rows;
   }
 
   prev() {
-      this.first = this.first - this.rows;
+    this.first = this.first - this.rows;
   }
 
   reset() {
-      this.first = 0;
+    this.first = 0;
   }
 
   isLastPage(): boolean {
-      return this.hotels ? this.first === (this.hotels.length - this.rows): true;
+    return this.hotels ? this.first === this.hotels.length - this.rows : true;
   }
 
   isFirstPage(): boolean {
-      return this.hotels ? this.first === 0 : true;
+    return this.hotels ? this.first === 0 : true;
   }
 
-  
-
-    showDialog() {
-        this.visible = true;
-    }
-
-    showAddDialog() {
-        this.visibleAddDialog = true;
-    }
+  showAddDialog() {
+    this.visibleAddDialog = true;
+  }
 }

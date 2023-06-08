@@ -43,24 +43,12 @@ export class HotelsService {
     private globalService: GlobalService
   ) { }
 
-  refreshLocalStorage(){
-    localStorage.setItem(this.localStorageKey, JSON.stringify([...this.hotels]));
-  }
 
-  getDataLocalStorage(){
-    return localStorage.getItem(this.localStorageKey);
-  }
 
 
   getHotels(): Observable<Hotel[]> {
-    const savedData = this.getDataLocalStorage();
-
-    if(!savedData) {
-      this.refreshLocalStorage()
-      const savedData = this.getDataLocalStorage();
-      return of(JSON.parse(savedData!));
-    }
-    return of(JSON.parse(savedData!));
+    let hotels = this.globalService.getData(this.localStorageKey, this.hotels);
+    return of(hotels);
   }
   
   saveHotel(hotel: Hotel | any): void{
@@ -69,7 +57,7 @@ export class HotelsService {
       status: true,
       id: this.globalService.getUUID()
     });
-    this.refreshLocalStorage();
+    this.globalService.refreshLocalStorage(this.localStorageKey, this.hotels)
     this.getHotels()
   }
 }
