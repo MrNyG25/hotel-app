@@ -8,41 +8,61 @@ import { HotelsService } from 'src/app/services/hotels.service';
   styleUrls: ['./hotels-public.component.scss']
 })
 export class HotelsPublicComponent implements OnInit  {
-  peopleQuantityList: any[] = [];
-
-  selectedPeople: any;
-
+  
   hotels: Hotel[] = [];
-
-  selectedCountry: any;
-  filteredCountries: any[] = [];
-  countries: any[] = [
-    {name: 'Cali'},
-    {name: 'Bogotá'},
-    {name: 'Medellín'},
+  
+  selectedCity: any;
+  filteredCities: any[] = [];
+  cities: any[] = [
+    {
+      id:1,
+      name: 'Cali',
+    },
+    {
+      id:2,
+      name: 'Bogotá',
+    },
+    {
+      id:3,
+      name: 'Medellín',
+    },
   ];
 
+  guestsQuantityList: any[] = [];
+
+  selectedPeople: any;
+  
   constructor(private hotelsService: HotelsService){}
 
   ngOnInit(): void {
     this.hotelsService.getHotels().subscribe((hotels: Hotel[]) => this.hotels = hotels);
-    this.fillPeopleQuantitySelect();
+    this.fillGuestsQuantitySelect();
   }
 
-  fillPeopleQuantitySelect(){
-    this.peopleQuantityList = [];
+  
+  filterCity(event: { query: any; }){
+    let filtered: any[] = [];
+    let query = event.query;
+    
+    for (let i = 0; i < this.cities.length; i++) {
+      let city = this.cities[i];
+      if (city.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+            filtered.push(city);
+        }
+      }
+      
+      this.filteredCities = filtered;
+      
+  }
+    
+  fillGuestsQuantitySelect(){
+    this.guestsQuantityList = [];
     for (let i = 1; i <= 20; i++) {
-        this.peopleQuantityList.push({ label: i+' Huéspedes' , value: i });
+        this.guestsQuantityList.push({ label: i+' Huéspedes' , value: i });
     }
   }
 
-  filterCountry(event: { query: any; }){
-    let query = event.query;
-    console.log(query);
-    this.filteredCountries = [...this.countries];
-  }
-
-  peopleQuantityListChanged(event: any){
+  guestsListChanged(event: any){
     console.log(event)
   }
 
