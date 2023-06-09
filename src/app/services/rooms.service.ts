@@ -101,5 +101,16 @@ export class RoomsService {
     })
     this.globalService.refreshLocalStorage(this.localStorageKey, roomsRes);
   }
+
+  updateIsReservedProperty(room_id: string): void{
+    let rooms: Room[] = this.globalService.getData(this.localStorageKey, this.rooms);
+    let roomsRes = rooms.map((room) => {
+      if(room.id === room_id){
+        room.is_reserved = true
+      }
+      return room;
+    })
+    this.globalService.refreshLocalStorage(this.localStorageKey, roomsRes);
+  }
   
 }

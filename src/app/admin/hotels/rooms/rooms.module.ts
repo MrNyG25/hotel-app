@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoomFormComponent } from './room-form/room-form.component';
 import { NgxCurrencyModule } from "ngx-currency";
 import { RoomBookingsComponent } from './room-bookings/room-bookings.component';
+import { BookingsListModule } from '../../components/bookings-list/bookings-list.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RoomBookingsComponent } from './room-bookings/room-bookings.component';
     PrimengModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    BookingsListModule
   ]
 })
 export class RoomsModule { }

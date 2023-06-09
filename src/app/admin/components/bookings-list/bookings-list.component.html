@@ -1,0 +1,30 @@
+<p-table [value]="roomBookings" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [tableStyle]="{'min-width': '50rem'}"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+<ng-template pTemplate="header">
+    <tr>
+        <th style="width:25%">Nombre del huésped</th>
+        <th style="width:25%">Correo</th>
+        <th style="width:25%">Fecha de Entrada</th>
+        <th style="width:25%">Fecha de Salida</th>
+        <th style="width:25%">Nombre contacto emergencia</th>
+        <th style="width:25%">Teléfono contacto emergencia</th>
+        
+        <th style="width:25%">Acciones</th>
+    </tr>
+</ng-template>
+<ng-template pTemplate="body" let-booking>
+    <tr>
+        <td>{{booking.guests[0].name +' '+ booking.guests[0].lastname}}</td>
+        <td>{{booking.guests[0].email}}</td>
+        <td>{{booking.check_in_date}}</td>
+        <td>{{booking.check_out_data}}</td>
+        <td>{{booking.emergency_contact.full_name}}</td>
+        <td>{{booking.emergency_contact.phone_number}}</td>
+ 
+         
+        <td>
+            <p-button (click)="onShowGuestModal(booking.guests)" icon="pi pi-user" styleClass="p-button-rounded p-button-primary " pTooltip="Huéspedes" tooltipPosition="bottom" ></p-button>
+        </td>
+    </tr>
+</ng-template>
+</p-table>

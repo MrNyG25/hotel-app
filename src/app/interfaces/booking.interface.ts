@@ -4,7 +4,7 @@ export interface Gender  {
 }
 export interface TypeDocument extends Gender {}
 
-interface Guest {
+export interface Guest {
   name: string;
   lastname: string;
   birth_date: string;

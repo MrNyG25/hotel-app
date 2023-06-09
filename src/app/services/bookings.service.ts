@@ -3,6 +3,7 @@ import { Booking } from '../interfaces/booking.interface';
 import { Observable, of } from 'rxjs';
 import { Room } from '../interfaces/room.interface';
 import { GlobalService } from './global.service';
+import { RoomsService } from './rooms.service';
 
 @Injectable({
   providedIn: 'root'
@@ -57,18 +58,23 @@ export class BookingsService {
   ]
   
   constructor(
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private roomsService: RoomsService
   ) { }
 
   getBookingsByRoomId(room_id: string): Observable<Booking[]>{
-    let booking = this.bookings.filter(booking => booking.room_id === room_id);
-    return of(booking);
+    let bookings: Booking[] = this.globalService.getData(this.localStorageKey, this.bookings);
+
+    let roomsFiltered = [...bookings].filter(booking => booking.room_id === room_id);
+
+    return of(roomsFiltered);
   }
 
   getBookings(): Observable<Booking[]>{
     let bookings: Booking[] = this.globalService.getData(this.localStorageKey, this.bookings);
 
     this.bookings = bookings;
+    
 
     return of(this.bookings);
   }
@@ -78,6 +84,8 @@ export class BookingsService {
 
     this.bookings = bookings;
 
+    this.roomsService.updateIsReservedProperty(data.room_id);
+
     this.bookings.push({
       ...data,
       id: this.globalService.getUUID(),
@@ -85,4 +93,5 @@ export class BookingsService {
 
     this.globalService.refreshLocalStorage(this.localStorageKey, this.bookings)
   }
+
 }

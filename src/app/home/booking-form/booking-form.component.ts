@@ -57,8 +57,8 @@ export class BookingFormComponent implements OnInit{
     private messageService: MessageService
     ) {}
 
-  ngOnInit() {
-      this.getRooms();
+  async ngOnInit() {
+      await this.getRooms();
       this.checking_date.valueChanges.subscribe(value => {
         this.checkout_date_range.patchValue({start: value})
       })
@@ -97,10 +97,17 @@ export class BookingFormComponent implements OnInit{
     this.guests.removeAt(index);
   }
 
-  getRooms(){
+  async getRooms(){
+    let bookings: any = await this.bookingsService.getBookings().toPromise();
+  
     this.activatedRoute.queryParams.subscribe(params => {
       this.roomsService.getRoomsByHotelId(params?.hotel).pipe(
-        map((rooms: Room[]) => rooms.filter(room => room.status === true))
+        map((rooms: Room[]) => rooms.filter(room => room.status === true)),
+        map((rooms: Room[]) => rooms.filter((room) =>{ 
+          if(!bookings.map((booking: Booking) => booking.room_id).includes(room.id)){
+            return room;
+          }
+        }))
       ).subscribe(rooms => this.rooms = rooms)
     })
   }
@@ -120,6 +127,11 @@ export class BookingFormComponent implements OnInit{
       return;
     }
 
+    if(this.checkout_date_range.invalid){
+      this.showToastError("Se debe seleccionar las fechas de entrada y salida")
+      return;
+    }
+
     let rangeDates = this.checkout_date_range.value;
     console.log(bookingFormData)
     console.log(rangeDates)
@@ -130,15 +142,29 @@ export class BookingFormComponent implements OnInit{
       return guest;
     });
 
-    let dataToSave = {
-      guests: guests,
-      emergency_contact:bookingFormData.emergency_contact,
-      check_in_date:  moment(rangeDates.start).format('YYYY-MM-DD'),
-      check_out_data: moment(rangeDates.end).format('YYYY-MM-DD'),
-      room_id: selectedRoom[0].id
-    }
-    console.log(dataToSave)
+   
     if(this.bookingForm.valid){
+
+      let room_id = selectedRoom[0].id;
+
+      let dataToSave = {
+        guests: guests,
+        emergency_contact:bookingFormData.emergency_contact,
+        check_in_date:  moment(rangeDates.start).format('YYYY-MM-DD'),
+        check_out_data: moment(rangeDates.end).format('YYYY-MM-DD'),
+        room_id
+      }
+
+      this.rooms = this.rooms.filter(room => room.id !== room_id)
+
+      this.bookingsService.saveBooking(dataToSave);
+      this.showToastSuccess("Se realizado una reserva, por favor verifica tu correo electrónico")
+      this.bookingForm.reset();
+      this.checkout_date_range.reset();
+      this.guests.reset();
+      this.checking_date.reset();
+      this.checkout_date_range.reset();
+      this.selected_room = null;
     }else{
       this.bookingForm.markAllAsTouched();
       this.checkout_date_range.markAllAsTouched();
@@ -158,7 +184,11 @@ export class BookingFormComponent implements OnInit{
   }
 
   showToastError(error_message: string) : void{
-    /* this.messageService.clear(); */
+    this.messageService.clear();
     this.messageService.add({ key: 'toastError',  severity: 'error', summary: 'Error', detail: error_message });
+  }
+  showToastSuccess(message: string) : void{
+    this.messageService.clear();
+    this.messageService.add({ key: 'toastSuccess',  severity: 'success', summary: 'Error', detail: message });
   }
 }

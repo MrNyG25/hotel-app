@@ -199,8 +199,8 @@
       <p-card *ngIf="selected_room" header="Costo total de la habitación" class="mt-5">
 
         <div class="flex flex-column gap-2 m-0">
-          <span>Precio de la habitación: {{ selected_room?.base_price | currency: 'COP': 'symbol' }}</span>
-          <span class="mt-3">Impuestos: {{ selected_room?.taxes | currency: 'COP': 'symbol' }}</span>  
+          <span>Precio de la habitación: {{ selected_room.base_price | currency: 'COP': 'symbol' }}</span>
+          <span class="mt-3">Impuestos: {{ selected_room.taxes | currency: 'COP': 'symbol' }}</span>  
           <span class="mt-3">Total: {{ (selected_room.taxes + selected_room.base_price) | currency: 'COP': 'symbol' }}</span>  
         </div>
     
@@ -219,3 +219,4 @@
   </div>
 </div>
 <p-toast key="toastError" position="bottom-center"></p-toast>
+<p-toast key="toastSuccess" position="bottom-center"></p-toast>

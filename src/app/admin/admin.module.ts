@@ -8,7 +8,7 @@ import { PrimengModule } from '../primeng/primeng.module';
 
 @NgModule({
   declarations: [
-    AdminComponent
+    AdminComponent,
   ],
   imports: [
     CommonModule,
