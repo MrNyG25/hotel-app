@@ -10,4 +10,5 @@ export interface Room {
     base_price: number;
     taxes: number;
     hotel_id: string;
+    status_choose?: boolean;
 }

@@ -12,13 +12,14 @@ export class RoomsService {
   private readonly localStorageKey = 'roomsList';
 
   roomTypes: RoomTypeI[] = [
-    { id: 1, name: "1 cama individual" },
-    { id: 2, name: "2 camas dobles" },
-    { id: 3, name: "1 cama doble, 2 camas individuales" },
-    { id: 4, name: "2 camas individuales" },
-    { id: 5, name: "1 cama queen" },
-    { id: 6, name: "1 cama king" }
-  ];
+    { id: 1, name: "1 cama individual", max_guests_capacity: 1 },
+    { id: 2, name: "2 camas dobles", max_guests_capacity: 4 },
+    { id: 3, name: "1 cama doble, 2 camas individuales", max_guests_capacity: 4 },
+    { id: 4, name: "2 camas individuales", max_guests_capacity: 2 },
+    { id: 5, name: "1 cama queen", max_guests_capacity: 2 },
+    { id: 6, name: "1 cama king", max_guests_capacity: 2 },
+    { id: 7, name: "4 camas dobles", max_guests_capacity: 8 }
+  ]
 ;
   roomLocations: RoomLocationI[] = [
     { id: 1, name: "Cerca a la sala de estar" },
@@ -33,7 +34,7 @@ export class RoomsService {
   rooms: Room[] =  [
     {
       id: "312312312",
-      room_type: { id: 1, name: "1 cama individual" },
+      room_type:{ id: 1, name: "1 cama individual", max_guests_capacity: 1 },
       location: { id: 1, name: "Cerca a la sala de estar" },
       status: true,
       is_reserved: true,
@@ -43,7 +44,7 @@ export class RoomsService {
     },
     {
       id: "5423432",
-      room_type:{ id: 6, name: "1 cama king" },
+      room_type: { id: 6, name: "1 cama king", max_guests_capacity: 2 },
       location:  { id: 6, name: "Cerca al patio delantero" },
       status: true,
       is_reserved: false,

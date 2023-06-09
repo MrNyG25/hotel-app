@@ -14,6 +14,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [],
@@ -30,7 +31,8 @@ import { DialogModule } from 'primeng/dialog';
     InputSwitchModule,
     DropdownModule,
     AutoCompleteModule,
-    DialogModule],
+    DialogModule,
+    ToastModule],
   exports: [CommonModule, MenubarModule,
     ButtonModule,
     CardModule,
@@ -42,6 +44,7 @@ import { DialogModule } from 'primeng/dialog';
     InputSwitchModule,
     DropdownModule,
     AutoCompleteModule,
-    DialogModule],
+    DialogModule,
+    ToastModule],
 })
 export class PrimengModule {}

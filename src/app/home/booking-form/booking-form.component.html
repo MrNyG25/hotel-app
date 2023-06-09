@@ -16,7 +16,8 @@
     <div class="flex flex-row gap-2">
         <mat-form-field color="accent">
             <mat-label>Fecha de entrada</mat-label>
-            <input matInput [formControl]="checking_date" [matDatepicker]="picker2" [min]="minDate">
+            <input matInput [formControl]="checking_date" [matDatepicker]="picker2" [min]="minDate" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(checking_date), 'ng-dirty': globalService.isFieldInvalid(checking_date)}">
+            <mat-hint *ngIf="globalService.isFieldInvalid(checking_date, 'required')" style="color: #e24c4c;">La fecha de entrada no puede estar vaciá</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
         </mat-form-field>
@@ -24,9 +25,10 @@
         <mat-form-field>
             <mat-label>Fecha de salida</mat-label>
             <mat-date-range-input [rangePicker]="picker" [min]="minDate"  [formGroup]="checkout_date_range" >
-              <input matStartDate placeholder="Fecha entrada" formControlName="start">
-              <input matEndDate placeholder="Fecha salida" formControlName="end">
+              <input matStartDate placeholder="Fecha entrada" formControlName="start" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(checkout_date_range.get('start')), 'ng-dirty': globalService.isFieldInvalid(checkout_date_range.get('start'))}">
+              <input matEndDate placeholder="Fecha salida" formControlName="end" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(checkout_date_range.get('end')), 'ng-dirty': globalService.isFieldInvalid(checkout_date_range.get('end'))}">
             </mat-date-range-input>
+            <mat-hint *ngIf="globalService.isFieldInvalid(checkout_date_range.get('end'), 'required')" style="color: #e24c4c;" >La fecha de salida no puede estar vaciá</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker ></mat-date-range-picker>
         </mat-form-field>
@@ -39,16 +41,20 @@
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 25%">Tipo</th>
+          <th style="width: 25%">Máximos capacidad</th>
           <th style="width: 25%">Ubicación</th>
+          <th style="width: 25%">Precio</th>
           <th style="width: 25%">Acciones</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-room>
         <tr>
           <td>{{ room.room_type.name }}</td>
+          <td>{{ room.room_type.max_guests_capacity }} {{room.room_type.max_guests_capacity == 1 ? 'huésped': 'huéspedes'}} </td>
           <td>{{ room.location.name }}</td>
+          <td>{{ room.base_price | currency: 'USD': 'symbol'  }}</td>
           <td>
-            <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-primary" pTooltip="Editar" tooltipPosition="bottom"></p-button>
+            <p-button icon="pi pi-check" [disabled]="room.status_choose" (click)="onChooseRoom(room.id)" styleClass="p-button-rounded p-button-success" pTooltip="Elegir" tooltipPosition="bottom"></p-button>
           </td>
         </tr>
       </ng-template>
@@ -57,7 +63,7 @@
     <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
       <div formArrayName="guests">
         <div
-          *ngFor="let guest of guests.controls; let i = index"
+          *ngFor="let item of guests.controls; let i = index"
           [formGroupName]="i"
           class="grid"
         >
@@ -67,56 +73,76 @@
           <div class="col-6">
             <div class="flex flex-column gap-2">
               <label class="">Nombres</label>
-              <input pInputText type="text" formControlName="name" />
+              <input pInputText type="text" formControlName="name" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('name')), 'ng-dirty': globalService.isFieldInvalid(item.get('name'))}" />
+              <div *ngIf="globalService.isFieldInvalid(item.get('name'), 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+              </div>
             </div>
           </div>
           <div class="col-6">
             <div class="flex flex-column gap-2">
               <label class="">Apellidos</label>
-              <input pInputText type="text" formControlName="lastname" />
+              <input pInputText type="text" formControlName="lastname" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('lastname')), 'ng-dirty': globalService.isFieldInvalid(item.get('lastname'))}" />
+              <div *ngIf="globalService.isFieldInvalid(item.get('lastname'), 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+              </div>
             </div>
           </div>
 
           <div class="col-6">
             <div class="flex flex-column gap-2">
               <label class="">Fecha de Nacimiento</label>
-              <input pInputText type="date" formControlName="birth_date" />
+              <p-calendar formControlName="birth_date" [showIcon]="true" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('birth_date')), 'ng-dirty': globalService.isFieldInvalid(item.get('birth_date'))}" dateFormat="yy-mm-dd"></p-calendar>
+              <div *ngIf="globalService.isFieldInvalid(item.get('birth_date'), 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+              </div>
             </div>
           </div>
           <div class="col-6">
             <div class="flex flex-column gap-2">
-              <label class="">Género</label>
-              <input pInputText type="text" formControlName="gender" />
+                <label class="">Genero</label>
+                <p-dropdown formControlName="gender" [options]="genders" optionLabel="name" placeholder="Seleccione genero" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('gender')), 'ng-dirty': globalService.isFieldInvalid(item.get('gender'))}" ></p-dropdown>
+                <div *ngIf="globalService.isFieldInvalid(item.get('gender'), 'required')">
+                  <small style="color: #ef4444;">Este campo no puede estar vació</small>
+                </div>
             </div>
           </div>
 
           <div class="col-6">
             <div class="flex flex-column gap-2">
-              <label class="">Tipo de Documento</label>
-              <input
-                pInputText
-                type="text"
-                formControlName="type_document_id"
-              />
+                <label class="">Tipo de documento</label>
+                <p-dropdown formControlName="type_document_id" [options]="document_types" optionLabel="name" placeholder="Seleccione tipo de documento" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('type_document_id')), 'ng-dirty': globalService.isFieldInvalid(item.get('type_document_id'))}" ></p-dropdown>
+                <div *ngIf="globalService.isFieldInvalid(item.get('type_document_id'), 'required')">
+                  <small style="color: #ef4444;">Este campo no puede estar vació</small>
+                </div>
             </div>
           </div>
           <div class="col-6">
             <div class="flex flex-column gap-2">
               <label class="">Número de Documento</label>
-              <input pInputText type="text" formControlName="document_id" />
+              <input pInputText type="number" formControlName="document_id" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('document_id')), 'ng-dirty': globalService.isFieldInvalid(item.get('document_id'))}" />
+              <div *ngIf="globalService.isFieldInvalid(item.get('document_id'), 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+              </div>
             </div>
           </div>
 
           <div class="col-6">
             <div class="flex flex-column gap-2">
               <label class="">Correo Electrónico</label>
-              <input pInputText type="email" formControlName="email" />
+              <input pInputText type="email" formControlName="email" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('email')), 'ng-dirty': globalService.isFieldInvalid(item.get('email'))}" />
+              <div *ngIf="globalService.isFieldInvalid(item.get('email'), 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+              </div>
             </div>
           </div>
           <div class="col-6">
             <div class="flex flex-column gap-2">
               <label class="">Número de Teléfono</label>
-              <input pInputText type="text" formControlName="phone_number" />
+              <input pInputText type="number" formControlName="phone_number" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(item.get('phone_number')), 'ng-dirty': globalService.isFieldInvalid(item.get('phone_number'))}" />
+              <div *ngIf="globalService.isFieldInvalid(item.get('phone_number'), 'required')">
+                <small style="color: #ef4444;">Este campo no puede estar vació</small>
+              </div>
             </div>
           </div>
 
@@ -148,13 +174,19 @@
             <div class="col-6">
                 <div class="flex flex-column gap-2">
                   <label class="">Nombre completo</label>
-                  <input pInputText type="text" formControlName="full_name" />
+                  <input pInputText type="text" formControlName="full_name" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(fullName), 'ng-dirty': globalService.isFieldInvalid(fullName)}" />
+                  <div *ngIf="globalService.isFieldInvalid(fullName, 'required')">
+                    <small style="color: #ef4444;">Este campo no puede estar vació</small>
+                  </div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="flex flex-column gap-2">
                   <label class="">Numero de teléfono</label>
-                  <input pInputText type="number" formControlName="phone_number" />
+                  <input pInputText type="number" formControlName="phone_number" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(phone_number), 'ng-dirty': globalService.isFieldInvalid(phone_number)}" />
+                  <div *ngIf="globalService.isFieldInvalid(phone_number, 'required')">
+                    <small style="color: #ef4444;">Este campo no puede estar vació</small>
+                  </div>
                 </div>
             </div>
         </div>
@@ -172,3 +204,4 @@
     </form>
   </div>
 </div>
+<p-toast key="toastError" position="bottom-center"></p-toast>

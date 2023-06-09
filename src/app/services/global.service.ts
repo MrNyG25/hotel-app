@@ -48,11 +48,14 @@ export class GlobalService {
    * user. If a validation rule is provided, it checks if the field has an error for that specific
    * rule.
    */
-  isFieldInvalid(field: AbstractControl, validationRule: string | null = null): boolean {
-    if(validationRule){
-      return field.errors?.[validationRule] && !field?.valid && (field?.dirty || field?.touched);
+  isFieldInvalid(field: AbstractControl | null, validationRule: string | null = null): boolean  {
+    if(field){
+      if(validationRule){
+        return field.errors?.[validationRule] && !field?.valid && (field?.dirty || field?.touched);
+      }
+      return !field?.valid && (field?.dirty || field?.touched);
     }
-    return !field?.valid && (field?.dirty || field?.touched);
+    return false;
   }
 
 }
