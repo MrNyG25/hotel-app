@@ -6,10 +6,30 @@
 
 
 <div class="card grid justify-content-center">
-  <div class="flex flex-column gap-2 col-10 lg:col-8 sm:col-11">
-    <div class="flex flex-column gap-2 my-3">
-        <h2>Rango estadía</h2>
-        <p-calendar selectionMode="range" [readonlyInput]="true" [showIcon]="true" [showButtonBar]="true"></p-calendar>
+  <div class="flex flex-column gap-2 lg:col-8 sm:col-11 md:col-11 " >
+
+    
+    <div>
+        <h2>Fecha</h2>
+    </div>
+
+    <div class="flex flex-row gap-2">
+        <mat-form-field color="accent">
+            <mat-label>Fecha de entrada</mat-label>
+            <input matInput [formControl]="checking_date" [matDatepicker]="picker2" [min]="minDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Fecha de salida</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [min]="minDate"  [formGroup]="checkout_date_range" >
+              <input matStartDate placeholder="Fecha entrada" formControlName="start">
+              <input matEndDate placeholder="Fecha salida" formControlName="end">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker ></mat-date-range-picker>
+        </mat-form-field>
     </div>
 
     <div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { map } from 'rxjs';
 import { Hotel } from 'src/app/admin/hotels/interfaces/hotel.interface';
 import { HotelsService } from 'src/app/services/hotels.service';
@@ -32,14 +33,29 @@ export class HotelsPublicComponent implements OnInit  {
   guestsQuantityList: any[] = [];
 
   selectedPeople: any;
+
+  minDate = new Date()
+
+  checking_date = new FormControl();
+
+  checkout_date_range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
+
   
   constructor(private hotelsService: HotelsService){}
 
   ngOnInit(): void {
+    this.checking_date.valueChanges.subscribe(value => {
+      this.checkout_date_range.patchValue({start: value})
+    })
+    
     this.hotelsService.getHotels().pipe(
       map(hotels => hotels.filter(hotel => hotel.status === true))
     ).subscribe((hotels: Hotel[]) => this.hotels = hotels);
     this.fillGuestsQuantitySelect();
+    
   }
 
   

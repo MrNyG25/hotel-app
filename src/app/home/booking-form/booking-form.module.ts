@@ -5,6 +5,7 @@ import { BookingFormRoutingModule } from './booking-form-routing.module';
 import { BookingFormComponent } from './booking-form.component';
 import { PrimengModule } from 'src/app/primeng/primeng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialAngularModule } from 'src/app/material-angular/material-angular.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BookingFormRoutingModule,
     PrimengModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialAngularModule
   ]
 })
 export class BookingFormModule { }

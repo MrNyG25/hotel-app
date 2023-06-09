@@ -5,15 +5,30 @@
 <div class="card flex justify-content-center gap-2">
     
     
+    <div class="flex flex-row gap-2 mt-3">
+        <mat-form-field color="accent">
+            <mat-label>Fecha de entrada</mat-label>
+            <input matInput [formControl]="checking_date" [matDatepicker]="picker2" [min]="minDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Fecha de salida</mat-label>
+            <mat-date-range-input  [rangePicker]="picker" [min]="minDate" [formGroup]="checkout_date_range" >
+              <input matStartDate placeholder="Fecha entrada" formControlName="start">
+              <input matEndDate placeholder="Fecha salida" formControlName="end">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker ></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+
     <div class="flex flex-column gap-2">
         <label class="">Ciudad</label>
         <p-autoComplete [(ngModel)]="selectedCity" [dropdown]="true" [suggestions]="filteredCities" (completeMethod)="filterCity($event)" field="name" placeholder="Seleccione la ciudad"></p-autoComplete>
     </div>
-
-    <div class="flex flex-column gap-2">
-        <label class="">Seleccione rango de estadía</label>
-        <p-calendar selectionMode="range" [readonlyInput]="true" [showIcon]="true" [showButtonBar]="true"></p-calendar>
-    </div>
+    
 
     <div class="flex flex-column gap-2">
         <label class="">Huéspedes</label>

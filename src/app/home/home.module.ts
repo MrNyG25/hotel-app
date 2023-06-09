@@ -6,7 +6,8 @@ import { HomeComponent } from './home.component';
 import { PrimengModule } from '../primeng/primeng.module';
 import { HomeNavComponent } from './components/home-nav/home-nav.component';
 import { HotelsPublicComponent } from './components/hotels-public/hotels-public.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialAngularModule } from '../material-angular/material-angular.module';
 
 
 @NgModule({
@@ -19,7 +20,9 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     HomeRoutingModule,
     FormsModule,
-    PrimengModule
+    ReactiveFormsModule,
+    PrimengModule,
+    MaterialAngularModule
   ]
 })
 export class HomeModule { }

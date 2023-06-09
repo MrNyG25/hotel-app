@@ -6,11 +6,15 @@ import { Room } from 'src/app/interfaces/room.interface';
 import { BookingsService } from 'src/app/services/bookings.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { map } from 'rxjs';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-booking-form',
   templateUrl: './booking-form.component.html',
-  styleUrls: ['./booking-form.component.scss']
+  styleUrls: ['./booking-form.component.scss'],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+  ]
 })
 export class BookingFormComponent implements OnInit{
 
@@ -25,6 +29,15 @@ export class BookingFormComponent implements OnInit{
     })
   } ,{ updateOn: 'submit' });
 
+  minDate = new Date()
+
+  checking_date = new FormControl();
+
+  checkout_date_range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
+
   constructor(
     private bookingsService: BookingsService,
     private roomsService: RoomsService,
@@ -33,6 +46,9 @@ export class BookingFormComponent implements OnInit{
 
   ngOnInit() {
       this.getRooms();
+      this.checking_date.valueChanges.subscribe(value => {
+        this.checkout_date_range.patchValue({start: value})
+      })
   }
 
   get guests(): FormArray {
