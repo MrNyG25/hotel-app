@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Room } from '../interfaces/room.interface';
 import { GlobalService } from './global.service';
 import { RoomsService } from './rooms.service';
+import * as Email from './smtp';
 
 @Injectable({
   providedIn: 'root'
@@ -79,7 +80,8 @@ export class BookingsService {
     return of(this.bookings);
   }
 
-  saveBooking(data: any){
+  async saveBooking(data: any, room_info: any){
+
     let bookings: Booking[] = this.globalService.getData(this.localStorageKey, this.bookings);
 
     this.bookings = bookings;
@@ -91,7 +93,80 @@ export class BookingsService {
       id: this.globalService.getUUID(),
     });
 
+
+
+    await this.sendEmail('yesid19999@gmail.com', data, room_info)
+
     this.globalService.refreshLocalStorage(this.localStorageKey, this.bookings)
+  }
+
+
+  async sendEmail(email_to: string, data: any, room_info: any){
+
+    let guest = data.guests[0];
+
+    await Email.send({
+      Host : "smtp.elasticemail.com",
+      Username : "nygarcia@misena.edu.co",
+      Password : "98B3F69E6C2462F46533EC54FCDF35FA065D",
+      To : email_to,
+      From : `nygarcia46@misena.edu.co`,
+      Subject : "HotelApp notificación: Reserva realizada exitosamente",
+      Body : `
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <title>Notificación de Reserva</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            color: #333;
+          }
+      
+          h1 {
+            color: #007BFF;
+          }
+      
+          p {
+            margin-bottom: 10px;
+          }
+      
+          .reservation-details {
+            background-color: #F5F5F5;
+            padding: 20px;
+            border-radius: 5px;
+          }
+      
+          .bold {
+            font-weight: bold;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Notificación de Reserva</h1>
+      
+        <div class="reservation-details">
+          <p><span class="bold">Estimado/a ${guest.name} ${guest.lastname}</span></p>
+      
+          <p>Su reserva ha sido confirmada. A continuación, se detallan los datos de la reserva:</p>
+      
+          <ul>
+            <li><span class="bold">Fecha de check-in:</span> ${data.check_in_date}</li>
+            <li><span class="bold">Fecha de check-out:</span> ${data.check_out_date}</li>
+            <li><span class="bold">Habitación reservada:</span> ${room_info.room_type.name}</li>
+            <li><span class="bold">Con cercanía a :</span>  ${room_info.location.name}</li>
+            <li><span class="bold">Precio total mas impuestos:</span>COP $ ${room_info.base_price + room_info.taxes}</li>
+          </ul>
+      
+          <p>¡Gracias por elegir nuestro hotel! Esperamos que tenga una estancia agradable.</p>
+      
+          <p>Atentamente,</p>
+          <p>Nombre hotel</p>
+        </div>
+      </body>
+      </html> `
+     })
   }
 
 }

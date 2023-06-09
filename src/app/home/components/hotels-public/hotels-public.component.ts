@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { map } from 'rxjs';
 import { Hotel } from 'src/app/admin/hotels/interfaces/hotel.interface';
 import { HotelsService } from 'src/app/services/hotels.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-hotels-public',
@@ -12,23 +13,27 @@ import { HotelsService } from 'src/app/services/hotels.service';
 export class HotelsPublicComponent implements OnInit  {
   
   hotels: Hotel[] = [];
+  temp_hotels: Hotel[] = [];
   
-  selectedCity: any;
   filteredCities: any[] = [];
   cities: any[] = [];
 
   guestsQuantityList: any[] = [];
 
-  selectedPeople: any;
-
+  
   minDate = new Date()
-
+  
   checking_date = new FormControl();
-
+  
   checkout_date_range = new FormGroup({
     start: new FormControl(),
     end: new FormControl(),
   });
+
+  cityFControl =  new FormControl();
+  guestsQuantityFControl =  new FormControl();
+
+  selectedPeople: any;
 
   
   constructor(private hotelsService: HotelsService){}
@@ -38,12 +43,21 @@ export class HotelsPublicComponent implements OnInit  {
     this.checking_date.valueChanges.subscribe(value => {
       this.checkout_date_range.patchValue({start: value})
     })
+
+    this.getHotels()
     
+    this.fillGuestsQuantitySelect();
+    this.subscribeFilters();
+  }
+
+  getHotels(){
     this.hotelsService.getHotels().pipe(
       map(hotels => hotels.filter(hotel => hotel.status === true))
-    ).subscribe((hotels: Hotel[]) => this.hotels = hotels);
-    this.fillGuestsQuantitySelect();
-    
+    ).subscribe((hotels: Hotel[]) => {
+      this.temp_hotels = [...hotels];
+
+      this.hotels = hotels;
+    });
   }
 
   
@@ -69,8 +83,36 @@ export class HotelsPublicComponent implements OnInit  {
     }
   }
 
-  guestsListChanged(event: any){
+  guestsQuantityListChanged(event: any){
     console.log(event)
+
+    
+
+  }
+
+  subscribeFilters(): void {
+    
+    this.checkout_date_range.valueChanges.subscribe((value) => {
+      let rangeDates = this.checkout_date_range.value;
+      
+      
+      let filterDates = {
+        check_in_date:  moment(rangeDates.start).format('YYYY-MM-DD'),
+        check_out_data: moment(rangeDates.end).format('YYYY-MM-DD'),
+      }
+      
+      console.log(filterDates)
+    })
+    
+    this.cityFControl.valueChanges.subscribe((city) => {
+      const temp =  this.temp_hotels.filter(hotel => hotel.city.id === city.id);
+
+      this.hotels = temp;
+    });
+
+    this.guestsQuantityFControl.valueChanges.subscribe((value) => {
+      console.log(value)
+    });
   }
 
 }

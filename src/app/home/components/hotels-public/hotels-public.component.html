@@ -26,20 +26,20 @@
 
     <div class="flex flex-column gap-2">
         <label class="">Ciudad</label>
-        <p-autoComplete [(ngModel)]="selectedCity" [dropdown]="true" [suggestions]="filteredCities" (completeMethod)="filterCity($event)" field="name" placeholder="Seleccione la ciudad"></p-autoComplete>
+        <p-autoComplete [formControl]="cityFControl" [dropdown]="true" [suggestions]="filteredCities" (completeMethod)="filterCity($event)" field="name" placeholder="Seleccione la ciudad"></p-autoComplete>
     </div>
     
 
     <div class="flex flex-column gap-2">
         <label class="">Huéspedes</label>
-        <p-dropdown [options]="guestsQuantityList" (ngModelChange)="guestsListChanged($event)" [ngModel]="selectedPeople" optionLabel="label" [virtualScrollItemSize]="20" placeholder="Cantidad de huéspedes"></p-dropdown>
+        <p-dropdown [formControl]="guestsQuantityFControl" [options]="guestsQuantityList" [ngModel]="selectedPeople" optionLabel="label" [virtualScrollItemSize]="20" placeholder="Cantidad de huéspedes"></p-dropdown>
     </div>
 </div>
 
 <div style="display: flex;justify-content: center;">
     <div class="grid mt-5">
         
-<p-card *ngFor="let hotel of hotels" class="sm:col-12 md:col-4 lg:col-4" [header]="hotel.name" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+<p-card *ngFor="let hotel of hotels" class="sm:col-12 md:col-4 lg:col-4 col-4" [header]="hotel.name" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
 
     <img [src]="hotel.image" [width]="313" [height]="246" alt="{{ hotel.name }}" />
     <ng-template pTemplate="footer">

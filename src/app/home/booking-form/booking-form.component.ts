@@ -112,7 +112,8 @@ export class BookingFormComponent implements OnInit{
     })
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
+
     let bookingFormData = this.bookingForm.value;
 
     //Custom validations
@@ -151,13 +152,13 @@ export class BookingFormComponent implements OnInit{
         guests: guests,
         emergency_contact:bookingFormData.emergency_contact,
         check_in_date:  moment(rangeDates.start).format('YYYY-MM-DD'),
-        check_out_data: moment(rangeDates.end).format('YYYY-MM-DD'),
+        check_out_date: moment(rangeDates.end).format('YYYY-MM-DD'),
         room_id
       }
 
       this.rooms = this.rooms.filter(room => room.id !== room_id)
 
-      this.bookingsService.saveBooking(dataToSave);
+      await this.bookingsService.saveBooking(dataToSave, selectedRoom[0]);
       this.showToastSuccess("Se realizado una reserva, por favor verifica tu correo electrónico")
       this.bookingForm.reset();
       this.checkout_date_range.reset();

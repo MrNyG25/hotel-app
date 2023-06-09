@@ -7,7 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class GlobalService {
 
-  constructor() { }
+  constructor(
+  ) { }
 
   getUUID(): string{
    return uuidv4();
@@ -56,6 +57,10 @@ export class GlobalService {
       return !field?.valid && (field?.dirty || field?.touched);
     }
     return false;
+  }
+
+  getMergedInfo():void {
+    //let hotels = this.getData(this.hotel, this.hotelsService.hotels);
   }
 
 }

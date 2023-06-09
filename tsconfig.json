@@ -23,6 +23,7 @@
       "dom"
     ],
     "useDefineForClassFields": false,
+    "allowJs": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
