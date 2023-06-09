@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card w-full">
     <h2>Hoteles</h2>
 
     <p-button (click)="onShowRoomFormModal()" icon="pi pi-plus-circle" styleClass="p-button-success mb-3" label="Agregar"></p-button>
@@ -23,8 +23,11 @@
                     <p-inputSwitch [(ngModel)]="hotel.status" (onChange)="onChangeHotelStatus(hotel.id)"></p-inputSwitch>
                 </td>
                 <td>
-                    <p-button (click)="onShowRoomFormModal(hotel)" icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning" pTooltip="Editar" tooltipPosition="bottom"></p-button>
-                    <p-button [routerLink]="'rooms'" [queryParams]="{hotel: hotel.id}" icon="pi pi-table" styleClass="p-button-rounded p-button-success ml-2 " pTooltip="Habitaciones" tooltipPosition="bottom" ></p-button>
+                    <div class="flex gap-2">
+
+                        <p-button (click)="onShowRoomFormModal(hotel)" icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning" pTooltip="Editar" tooltipPosition="bottom"></p-button>
+                        <p-button [routerLink]="'rooms'" [queryParams]="{hotel: hotel.id}" icon="pi pi-table" styleClass="p-button-rounded p-button-success ml-2 " pTooltip="Habitaciones" tooltipPosition="bottom" ></p-button>
+                    </div>
                 </td>
             </tr>
         </ng-template>

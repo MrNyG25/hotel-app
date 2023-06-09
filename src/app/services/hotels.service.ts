@@ -47,7 +47,7 @@ export class HotelsService {
         id:2,
         name: 'Bogotá',
       },
-      status: false,
+      status: true,
 
     },
     {
