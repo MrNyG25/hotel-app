@@ -45,7 +45,7 @@
     <ng-template pTemplate="footer">
         <span>{{hotel.city}}</span>
         <div class="footer-container">
-            <span> {{ hotel.night_price | currency: 'USD': 'symbol' }} noche</span>
+            <span> {{ hotel.night_price | currency: 'COP': 'symbol' }} noche</span>
             <button pButton routerLink="/home/booking-form" [queryParams]="{'hotel': hotel.id}" label="Reservar" class="p-button-success"></button>
         </div>
        

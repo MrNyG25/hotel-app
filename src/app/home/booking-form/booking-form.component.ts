@@ -8,8 +8,8 @@ import { RoomsService } from 'src/app/services/rooms.service';
 import { map } from 'rxjs';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { GlobalService } from 'src/app/services/global.service';
-import { BookingFormService } from './booking-form.service';
 import { MessageService } from 'primeng/api';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-booking-form',
@@ -43,19 +43,17 @@ export class BookingFormComponent implements OnInit{
   minDate = new Date()
 
 
-  document_types: any[] = []
+  document_types: any[] = [];
 
-  genders: any[] = [
-    {id: 1, name :'Masculino'}, 
-    {id: 2, name :'Femenino'}
-  ]
+  genders: any[] = [];
+
+  selected_room: Room | null = null;
 
   constructor(
     private bookingsService: BookingsService,
     private roomsService: RoomsService,
     private activatedRoute: ActivatedRoute,
     public globalService : GlobalService,
-    private bookingFormService: BookingFormService,
     private messageService: MessageService
     ) {}
 
@@ -64,7 +62,8 @@ export class BookingFormComponent implements OnInit{
       this.checking_date.valueChanges.subscribe(value => {
         this.checkout_date_range.patchValue({start: value})
       })
-      this.document_types = this.bookingFormService.document_types;
+      this.document_types = this.bookingsService.document_types;
+      this.genders = this.bookingsService.genders;
   }
 
   get guests(): FormArray {
@@ -87,7 +86,7 @@ export class BookingFormComponent implements OnInit{
       gender: new FormControl('', [Validators.required]),
       type_document_id: new FormControl('', [Validators.required]),
       document_id: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")]),
       phone_number: new FormControl('', [Validators.required]),
     });
     
@@ -107,10 +106,10 @@ export class BookingFormComponent implements OnInit{
   }
 
   onSubmit(): void {
-    let data = this.bookingForm.value;
+    let bookingFormData = this.bookingForm.value;
 
     //Custom validations
-    if(data?.guests?.length == 0){
+    if(bookingFormData?.guests?.length == 0){
       this.showToastError("Se debe ingresar la información de por lo menos de un Huésped")
       return;
     }
@@ -121,9 +120,25 @@ export class BookingFormComponent implements OnInit{
       return;
     }
 
-    console.log(data)
+    let rangeDates = this.checkout_date_range.value;
+    console.log(bookingFormData)
+    console.log(rangeDates)
+    console.log(selectedRoom[0])
+
+    let guests: any = bookingFormData.guests?.map((guest: any) => {
+      guest.birth_date = moment(guest.birth_date).format('YYYY-MM-DD');
+      return guest;
+    });
+
+    let dataToSave = {
+      guests: guests,
+      emergency_contact:bookingFormData.emergency_contact,
+      check_in_date:  moment(rangeDates.start).format('YYYY-MM-DD'),
+      check_out_data: moment(rangeDates.end).format('YYYY-MM-DD'),
+      room_id: selectedRoom[0].id
+    }
+    console.log(dataToSave)
     if(this.bookingForm.valid){
- 
     }else{
       this.bookingForm.markAllAsTouched();
       this.checkout_date_range.markAllAsTouched();
@@ -134,6 +149,7 @@ export class BookingFormComponent implements OnInit{
     this.rooms = this.rooms.map((room) => {
       if(room.id === room_id){
         room.status_choose = true;
+        this.selected_room = room;
       }else{
         room.status_choose = false;
       }

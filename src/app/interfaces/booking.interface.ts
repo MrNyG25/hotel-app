@@ -1,13 +1,18 @@
+export interface Gender  {
+  id: number;
+  name: string;
+}
+export interface TypeDocument extends Gender {}
+
 interface Guest {
   name: string;
   lastname: string;
   birth_date: string;
-  gender: string;
-  type_document_id: string;
+  gender: Gender;
+  type_document_id: TypeDocument;
   document_id: number;
   email: string;
   phone_number: number;
-  is_guest_who_make_booking: boolean;
 }
 
 interface EmergencyContact {
@@ -16,6 +21,7 @@ interface EmergencyContact {
 }
 
 export interface Booking {
+  id: string;
   guests: Guest[];
   emergency_contact: EmergencyContact;
   check_in_date: string;
