@@ -39,5 +39,6 @@
         </div>
     </div>
    
-    <p-button icon="pi pi-plus-circle" styleClass="p-button-success mt-3" label="Guardar" type="submit"></p-button>
+    <p-button icon="pi pi-plus-circle" styleClass="p-button-success mt-3" [label]="isEditing ? 'Editar' : 'Guardar'" type="submit"></p-button>
 </form>
+<p-toast key="toastSuccess" position="bottom-center"></p-toast>

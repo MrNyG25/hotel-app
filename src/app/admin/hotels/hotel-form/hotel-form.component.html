@@ -12,7 +12,7 @@
     <div class="col-6">
         <div class="flex flex-column gap-2">
             <label class="">Ciudad</label>
-            <input pInputText formControlName="city" placeholder="Cali" />
+            <p-dropdown [options]="cities" formControlName="city" optionLabel="name" [ngClass]="{'ng-invalid': globalService.isFieldInvalid(city), 'ng-dirty': globalService.isFieldInvalid(city)}" placeholder="Seleccione un tipo de habitación"></p-dropdown>
             <div *ngIf="globalService.isFieldInvalid(city, 'required')">
                 <small style="color: #ef4444;">Este campo no puede estar vació</small>
             </div>
@@ -32,7 +32,7 @@
     </div>
     <div class="col-6">
         <div class="flex flex-column gap-2">
-            <label class="">Costo por noche</label>
+            <label class="">Costo promedio por noche</label>
             <input pInputText currencyMask  formControlName="night_price" type="text" placeholder="200.000" [options]="{ prefix: 'COP$ ', thousands: ',', decimal: '.' }"/>
             <div *ngIf="globalService.isFieldInvalid(night_price, 'required')">
                 <small style="color: #ef4444;">Este campo no puede estar vació</small>
@@ -40,5 +40,6 @@
         </div>
     </div>
    
-    <p-button icon="pi pi-plus-circle" styleClass="p-button-success mt-3" label="Guardar" type="submit"></p-button>
+    <p-button icon="pi pi-plus-circle" styleClass="p-button-success mt-3" [label]="isEditing ? 'Editar' : 'Guardar'" type="submit"></p-button>
 </form>
+<p-toast key="toastSuccess" position="bottom-center"></p-toast>

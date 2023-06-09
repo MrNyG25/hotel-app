@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { HotelsService } from '../../services/hotels.service';
 import { Hotel } from './interfaces/hotel.interface';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { HotelFormComponent } from './hotel-form/hotel-form.component';
 
 interface Customer {}
 
@@ -10,10 +12,10 @@ interface Customer {}
   selector: 'app-hotels-public',
   templateUrl: './hotels.component.html',
   styleUrls: ['./hotels.component.scss'],
-  providers: [MessageService, ConfirmationService],
+  providers: [MessageService, ConfirmationService,DialogService],
 })
-export class HotelsComponent implements OnInit {
-  visibleAddDialog: boolean = false;
+export class HotelsComponent implements OnInit ,OnDestroy{
+  refHotelFormModal: DynamicDialogRef = new DynamicDialogRef;
 
   hotels: Customer[] = [];
 
@@ -21,7 +23,9 @@ export class HotelsComponent implements OnInit {
 
   rows = 10;
 
-  constructor(private hotelsService: HotelsService) {}
+  constructor(
+    private hotelsService: HotelsService,
+    public dialogService: DialogService,) {}
 
   ngOnInit() {
     this.getHotels();
@@ -38,11 +42,27 @@ export class HotelsComponent implements OnInit {
     this.hotelsService.toggleHotelStatus(hotel_id);
   }
 
-  showAddDialog() {
-    this.visibleAddDialog = true;
+  onShowRoomFormModal(data_to_patch: any = null): void {
+    this.refHotelFormModal = this.dialogService.open(HotelFormComponent, {
+        header: 'Hotel',
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data: {
+          data_to_patch
+        }
+    });
+
+    this.refHotelFormModal.onClose.subscribe(() => {
+      this.getHotels();
+    });
+
   }
 
-  onAddDialogClose(){
-    this.getHotels();
+  ngOnDestroy(): void {
+    if (this.refHotelFormModal) {
+        this.refHotelFormModal.close();
+    }
   }
 }

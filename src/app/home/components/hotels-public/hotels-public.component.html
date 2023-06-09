@@ -43,7 +43,7 @@
 
     <img [src]="hotel.image" [width]="313" [height]="246" alt="{{ hotel.name }}" />
     <ng-template pTemplate="footer">
-        <span>{{hotel.city}}</span>
+        <span>{{hotel.city.name}}</span>
         <div class="footer-container">
             <span> {{ hotel.night_price | currency: 'COP': 'symbol' }} noche</span>
             <button pButton routerLink="/home/booking-form" [queryParams]="{'hotel': hotel.id}" label="Reservar" class="p-button-success"></button>

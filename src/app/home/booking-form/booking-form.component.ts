@@ -189,6 +189,6 @@ export class BookingFormComponent implements OnInit{
   }
   showToastSuccess(message: string) : void{
     this.messageService.clear();
-    this.messageService.add({ key: 'toastSuccess',  severity: 'success', summary: 'Error', detail: message });
+    this.messageService.add({ key: 'toastSuccess',  severity: 'success', summary: 'Éxito', detail: message });
   }
 }

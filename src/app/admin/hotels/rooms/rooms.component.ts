@@ -4,6 +4,7 @@ import { RoomsService } from '../../../services/rooms.service';
 import { ActivatedRoute } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { RoomBookingsComponent } from './room-bookings/room-bookings.component';
+import { RoomFormComponent } from './room-form/room-form.component';
 
 @Component({
   selector: 'app-rooms',
@@ -13,9 +14,9 @@ import { RoomBookingsComponent } from './room-bookings/room-bookings.component';
 })
 export class RoomsComponent implements OnInit,OnDestroy  {
   rooms: Room[] = [];
-  visibleAddDialog: boolean = false;
 
   refRoomBookingsModal: DynamicDialogRef = new DynamicDialogRef;
+  refRoomFormModal: DynamicDialogRef = new DynamicDialogRef;
 
   constructor(
     private roomsService: RoomsService,
@@ -34,13 +35,7 @@ export class RoomsComponent implements OnInit,OnDestroy  {
     })
   }
 
-  showAddDialog(): void {
-    this.visibleAddDialog = true;
-  }
 
-  onAddDialogClose(): void{
-    this.getRooms();
-  }
 
   onChangeRoomStatus(room_id: string): void{
     this.roomsService.toggleRoomStatus(room_id);
@@ -62,9 +57,31 @@ export class RoomsComponent implements OnInit,OnDestroy  {
 
   }
 
+  onShowRoomFormModal(data_to_patch: any = null): void {
+    this.refRoomFormModal = this.dialogService.open(RoomFormComponent, {
+        header: 'Habitación',
+        width: '70%',
+        contentStyle: { overflow: 'auto' },
+        baseZIndex: 10000,
+        maximizable: true,
+        data: {
+          data_to_patch
+        }
+    });
+
+    this.refRoomFormModal.onClose.subscribe(() => {
+      this.getRooms();
+    });
+
+  }
+
+
   ngOnDestroy(): void {
       if (this.refRoomBookingsModal) {
           this.refRoomBookingsModal.close();
+      }
+      if (this.refRoomFormModal) {
+          this.refRoomFormModal.close();
       }
   }
 }

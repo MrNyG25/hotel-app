@@ -74,6 +74,14 @@ export class RoomsService {
     return of(roomsFiltered)
   }
 
+  getRooms(): Observable<Room[]>{
+    let rooms: Room[] = this.globalService.getData(this.localStorageKey, this.rooms);
+
+    let roomsFiltered = [...rooms];
+
+    return of(roomsFiltered)
+  }
+
 
   saveRoom(room: Room | any): void{
     let rooms: Room[] = this.globalService.getData(this.localStorageKey, this.rooms);
@@ -112,5 +120,22 @@ export class RoomsService {
     })
     this.globalService.refreshLocalStorage(this.localStorageKey, roomsRes);
   }
+
+  updateRoom(room_param: Room | any): void{
+   
+    let rooms = this.globalService.getData(this.localStorageKey, this.rooms);
+    
+    this.rooms = rooms;
+
+    this.rooms = this.rooms.map((room) => {
+      if(room.id === room_param.id){
+        room = {...room, ...room_param, }
+      }
+      return room;
+    })
+    this.globalService.refreshLocalStorage(this.localStorageKey, this.rooms)
+    this.getRooms()
+  }
+
   
 }

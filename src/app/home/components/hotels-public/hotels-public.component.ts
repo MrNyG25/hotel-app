@@ -15,20 +15,7 @@ export class HotelsPublicComponent implements OnInit  {
   
   selectedCity: any;
   filteredCities: any[] = [];
-  cities: any[] = [
-    {
-      id:1,
-      name: 'Cali',
-    },
-    {
-      id:2,
-      name: 'Bogotá',
-    },
-    {
-      id:3,
-      name: 'Medellín',
-    },
-  ];
+  cities: any[] = [];
 
   guestsQuantityList: any[] = [];
 
@@ -47,6 +34,7 @@ export class HotelsPublicComponent implements OnInit  {
   constructor(private hotelsService: HotelsService){}
 
   ngOnInit(): void {
+    this.cities = this.hotelsService.cities;
     this.checking_date.valueChanges.subscribe(value => {
       this.checkout_date_range.patchValue({start: value})
     })
