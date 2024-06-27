@@ -62,17 +62,14 @@ export class HotelsPublicComponent implements OnInit  {
 
   
   filterCity(event: { query: any; }){
-    let filtered: any[] = [];
-    let query = event.query;
-    
-    for (let i = 0; i < this.cities.length; i++) {
-      let city = this.cities[i];
-      if (city.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-            filtered.push(city);
-        }
-      }
-      
-      this.filteredCities = filtered;
+    let filtered: any[] = [...this.cities];
+  
+    filtered.push({
+      id: "all",
+      name: "Todas"
+    })
+
+    this.filteredCities = filtered;
       
   }
     
@@ -106,7 +103,10 @@ export class HotelsPublicComponent implements OnInit  {
     
     this.cityFControl.valueChanges.subscribe((city) => {
       const temp =  this.temp_hotels.filter(hotel => hotel.city.id === city.id);
-
+      if(city.id == "all"){
+        this.hotels = [...this.temp_hotels];
+        return;
+      }
       this.hotels = temp;
     });
 
